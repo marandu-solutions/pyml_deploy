@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pyml/Pages/Initial%20Page/initial_page.dart';
 import 'package:pyml/Pages/Register_page/register_page.dart';
-
 import 'Pages/LoginPage/login_page.dart';
+import 'package:pyml/Pages/estupage/_page/estu_page.dart';
+import 'package:pyml/Pages/profpage/_page/prof_page.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => InitialPage(),  // Rota para a tela inicial
         '/login': (context) => LoginPage(), // Rota para a tela de login
         '/cadastro': (context) => RegisterPage(), // Rota para a tela de cadastro
+
       },
     );
   }

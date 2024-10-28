@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pyml/Pages/profpage/prof_page.dart';
+import 'package:pyml/Pages/estupage/estu_page.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -96,7 +98,10 @@ class LoginPage extends StatelessWidget {
                 children: <Widget>[
                   ElevatedButton(
                     onPressed: () {
-                      // Ação ao clicar em "Entrar como Professor"
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProfessorPage()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.cyan,
@@ -112,7 +117,10 @@ class LoginPage extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      // Ação ao clicar em "Entrar como Estudante"
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => StudentPage()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.cyan,
