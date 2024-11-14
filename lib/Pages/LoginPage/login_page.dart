@@ -33,24 +33,6 @@ class LoginPage extends StatelessWidget {
               ),
 
               SizedBox(height: 30),
-
-              // Campo "Nome"
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.blue[900],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: TextField(
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.person, color: Colors.white),
-                    hintText: 'Nome',
-                    hintStyle: TextStyle(color: Colors.white),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(15),
-                  ),
-                ),
-              ),
               SizedBox(height: 15),
 
               // Campo "Login"
@@ -111,7 +93,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      'Entrar como Professor',
+                      'Cadastre-se',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -130,7 +112,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      'Entrar como Estudante',
+                      'Login',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
