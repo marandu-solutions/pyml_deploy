@@ -1,8 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:pyml/Pages/profpage/prof_page.dart';
-import 'package:pyml/Pages/estupage/estu_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:pyml/Pages/Home_Page/home_page.dart';
+import 'package:pyml/Pages/Register_page/register_page.dart';
+import 'package:pyml/Providers/user_provider.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void _login() async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      User? user = userCredential.user;
+      if (user != null) {
+        // Salvar os dados do usuário no UserProvider e SharedPreferences
+        await userProvider.saveUser(
+          userId: user.uid,
+          name: user.displayName ?? "Usuário",
+          photoUrl: user.photoURL,
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao fazer login: $e')),
+      );
+    }
+  }
+
+  void _navigateToSignUp() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RegisterPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,15 +62,12 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // Logo PYML
               Image.asset(
-                'assets/LOGO.png', // Substitua pelo caminho da sua imagem
+                'assets/initial_page_assets/LOGO.png', // Substitua pelo caminho da sua imagem
                 width: 150,
                 height: 150,
               ),
               SizedBox(height: 10),
-
-              // Texto "PYML"
               Text(
                 'PYML',
                 style: TextStyle(
@@ -31,9 +77,7 @@ class LoginPage extends StatelessWidget {
                   letterSpacing: 2.0,
                 ),
               ),
-
               SizedBox(height: 30),
-              SizedBox(height: 15),
 
               // Campo "Login"
               Container(
@@ -42,10 +86,11 @@ class LoginPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: TextField(
+                  controller: _emailController,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.login, color: Colors.white),
-                    hintText: 'Login',
+                    hintText: 'Email',
                     hintStyle: TextStyle(color: Colors.white),
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.all(15),
@@ -61,6 +106,7 @@ class LoginPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: TextField(
+                  controller: _passwordController,
                   obscureText: true,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
@@ -74,17 +120,12 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 20),
 
-              // Botões "Entrar como Professor" e "Entrar como Estudante"
+              // Botões "Login" e "Cadastre-se"
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ProfessorPage()),
-                      );
-                    },
+                    onPressed: _navigateToSignUp, // Chama a tela de cadastro
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.cyan,
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -98,12 +139,7 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => StudentPage()),
-                      );
-                    },
+                    onPressed: _login, // Realiza o login
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.cyan,
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -117,31 +153,6 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
-
-              SizedBox(height: 20),
-
-              // Botão "Entrar com o Gmail"
-              ElevatedButton.icon(
-                onPressed: () {
-                  // Ação ao clicar no botão "Entrar com o Gmail"
-                },
-                icon: Image.asset(
-                  'assets/google.png', // Substitua pelo caminho do ícone do Google
-                  width: 24,
-                  height: 24,
-                ),
-                label: Text(
-                  'Entrar com o Gmail',
-                  style: TextStyle(color: Colors.black),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
               ),
             ],
           ),

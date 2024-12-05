@@ -1,8 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:pyml/Pages/profpage/prof_page.dart';
-import 'package:pyml/Pages/estupage/estu_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../../Data/Service/user_service.dart';
+import '../Home_Page/home_page.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
+  @override
+  _RegisterPageState createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final UserService _userService = UserService();
+
+  void _registerUser() async {
+    try {
+      // Cria a conta no Firebase Authentication
+      final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        // Adiciona o usuário na coleção 'users'
+        await _userService.addUser(
+          userId: user.uid,
+          name: _nameController.text.trim(),
+          photoUrl: null,
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Cadastro realizado com sucesso!')),
+        );
+
+        // Navega para a HomePage
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()), // Altere para a sua HomePage
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao cadastrar: $e')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,15 +61,12 @@ class RegisterPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // Logo PYML
               Image.asset(
                 'assets/LOGO.png', // Substitua pelo caminho da sua imagem
                 width: 150,
                 height: 150,
               ),
               SizedBox(height: 10),
-
-              // Texto "PYML"
               Text(
                 'PYML',
                 style: TextStyle(
@@ -31,7 +76,6 @@ class RegisterPage extends StatelessWidget {
                   letterSpacing: 2.0,
                 ),
               ),
-
               SizedBox(height: 30),
 
               // Campo "Nome"
@@ -41,6 +85,7 @@ class RegisterPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: TextField(
+                  controller: _nameController,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.person, color: Colors.white),
@@ -53,17 +98,18 @@ class RegisterPage extends StatelessWidget {
               ),
               SizedBox(height: 15),
 
-              // Campo "Login"
+              // Campo "Email"
               Container(
                 decoration: BoxDecoration(
                   color: Colors.blue[900],
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: TextField(
+                  controller: _emailController,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.login, color: Colors.white),
-                    hintText: 'Login',
+                    prefixIcon: Icon(Icons.email, color: Colors.white),
+                    hintText: 'Email',
                     hintStyle: TextStyle(color: Colors.white),
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.all(15),
@@ -79,6 +125,7 @@ class RegisterPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: TextField(
+                  controller: _passwordController,
                   obscureText: true,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
@@ -92,73 +139,19 @@ class RegisterPage extends StatelessWidget {
               ),
               SizedBox(height: 20),
 
-              // Botões "Entrar como Professor" e "Entrar como Estudante"
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ProfessorPage()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.cyan,
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Text(
-                      'Entrar como Professor',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => StudentPage()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.cyan,
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Text(
-                      'Entrar como Estudante',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ],
-              ),
-
-              SizedBox(height: 20),
-
-              // Botão "Entrar com o Gmail"
-              ElevatedButton.icon(
-                onPressed: () {
-                  // Ação ao clicar no botão "Entrar com o Gmail"
-                },
-                icon: Image.asset(
-                  'assets/google.png', // Substitua pelo caminho do ícone do Google
-                  width: 24,
-                  height: 24,
-                ),
-                label: Text(
-                  'Entrar com o Gmail',
-                  style: TextStyle(color: Colors.black),
-                ),
+              // Botão "Cadastrar"
+              ElevatedButton(
+                onPressed: _registerUser,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  backgroundColor: Colors.cyan,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
+                ),
+                child: Text(
+                  'Cadastre-se',
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
             ],

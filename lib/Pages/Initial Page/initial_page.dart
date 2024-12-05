@@ -12,7 +12,7 @@ class InitialPage extends StatelessWidget {
             top: MediaQuery.of(context).size.height * 0.35,
             left: 0 - 50,
             child: Image.asset(
-              'assets/boneco1.png', // Caminho da primeira imagem do boneco
+              'assets/initial_page_assets/boneco1.png', // Caminho da primeira imagem do boneco
               width: 300,
               height: 300,
             ),
@@ -23,7 +23,7 @@ class InitialPage extends StatelessWidget {
             top: MediaQuery.of(context).size.height * 0.35,
             right: 0 - 50,
             child: Image.asset(
-              'assets/boneco2.png', // Caminho da segunda imagem do boneco
+              'assets/initial_page_assets/boneco2.png', // Caminho da segunda imagem do boneco
               width: 300,
               height: 300,
             ),
@@ -34,7 +34,7 @@ class InitialPage extends StatelessWidget {
             top: 0 - 20,
             left: MediaQuery.of(context).size.width * 0.20,
             child: Image.asset(
-              'assets/Quadro.png', // Caminho da imagem do quadro
+              'assets/initial_page_assets/Quadro.png', // Caminho da imagem do quadro
               width: 300,
               height: 300,
             ),
