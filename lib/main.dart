@@ -20,7 +20,7 @@ Future<void> main() async {
   // Ativar Firebase App Check
   await FirebaseAppCheck.instance.activate(
     androidProvider: AndroidProvider.debug,
-    webProvider: ReCaptchaV3Provider('6Leja5MqAAAAAF9VP3qtePD-PgpO3C5x4DSdXVM0'),
+    webProvider: ReCaptchaV3Provider('6LfhhpMqAAAAADdD7Jx6WgtluE0wMThMwz4MmCoN'),
   );
 
   // Inicializar o UserProvider com tratamento de erro

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyml/Tabs_Screens/code_cards.dart';
+import '../../HTML/interpreter/html_interpreter.dart';
 import '../../Tabs_Screens/home_cards.dart';
 import 'components/bottom_nav_bar.dart';
 
@@ -67,8 +68,9 @@ class _HomePageState extends State<HomePage> {
                       bottom: 2, // Ajusta o botão acima da barra
                       child: FloatingActionButton(
                         onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('FAB clicado!')),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HtmlEditor()),
                           );
                         },
                         backgroundColor: Colors.blue,

@@ -62,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.asset(
-                'assets/LOGO.png', // Substitua pelo caminho da sua imagem
+                'assets/initial_page_assets/LOGO.png', // Substitua pelo caminho da sua imagem
                 width: 150,
                 height: 150,
               ),

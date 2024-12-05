@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import '../Sucess_Page/sucess_page.dart';
+
 class TestingScreen extends StatefulWidget {
   @override
   _TestingScreenState createState() => _TestingScreenState();
@@ -29,6 +31,17 @@ class _TestingScreenState extends State<TestingScreen> {
       setState(() {
         currentProcedure++; // Avança para o próximo procedimento
       });
+    }
+
+    // Aguarda 1 segundo após finalizar todos os procedimentos
+    await Future.delayed(Duration(seconds: 1));
+
+    // Navega para a SuccessScreen
+    if (mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SuccessScreen()),
+      );
     }
   }
 
