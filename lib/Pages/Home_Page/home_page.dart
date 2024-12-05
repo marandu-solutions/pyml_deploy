@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../Tabs_Screens/tabs_screens.dart';
+import 'package:pyml/Tabs_Screens/code_cards.dart';
+import '../../Tabs_Screens/home_cards.dart';
 import 'components/bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,7 +14,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _screens = [
     CardsListView(),
     Placeholder(),
-    Placeholder(),
+    CodeListView(),
     Placeholder(),
   ];
 
