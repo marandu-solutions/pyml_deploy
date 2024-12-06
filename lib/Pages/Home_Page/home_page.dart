@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pyml/Tabs_Screens/code_cards.dart';
 import '../../HTML/interpreter/html_interpreter.dart';
 import '../../Tabs_Screens/home_cards.dart';
+import '../../Tabs_Screens/search.dart';
+import '../../Tabs_Screens/user_details.dart';
 import 'Components/bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,9 +16,9 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _screens = [
     CardsListView(),
-    Placeholder(),
+    SearchScreen(),
     CodeListView(),
-    Placeholder(),
+    UserDetailsScreen(),
   ];
 
   void _onNavItemTapped(int index) {

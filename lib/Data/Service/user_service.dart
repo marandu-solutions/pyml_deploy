@@ -18,4 +18,17 @@ class UserService {
       throw Exception('Erro ao adicionar usuário: $e');
     }
   }
+
+  Future<List<Map<String, dynamic>>> searchUsersByName(String query) async {
+    try {
+      final snapshot = await _firestore
+          .collection('users')
+          .where('name', isGreaterThanOrEqualTo: query)
+          .where('name', isLessThan: '${query}z')
+          .get();
+      return snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+    } catch (e) {
+      throw Exception('Erro ao buscar usuários: $e');
+    }
+  }
 }

@@ -47,6 +47,7 @@ dependencies:
   firebase_app_check: ^0.3.1+7
   shared_preferences: ^2.3.3
   provider: ^6.1.2
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +81,7 @@ flutter:
     - assets/cards/card4.png
     - assets/code_cards/card1.png
     - assets/bg.png
+    - assets/default_user.png
 
 
 
