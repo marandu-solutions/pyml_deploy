@@ -1,48 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CreatedCodesService {
+class CodeService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  /// Adiciona um novo código à coleção `created_codes`.
+  /// Compara uma string com o campo "code" na coleção "code_created" no Firestore.
   ///
-  /// - [code]: Código a ser adicionado (string).
-  /// - [userId]: ID do usuário que criou o código (string).
-  Future<void> addCreatedCode({required String code, required String userId}) async {
+  /// [codeToCompare] é a string que será comparada.
+  /// Retorna `true` se o código for encontrado e for igual, `false` caso contrário.
+  Future<bool> isCodeEqual(String codeToCompare) async {
     try {
-      // Referência ao documento do usuário na coleção `users`.
-      DocumentReference userRef = _firestore.collection('users').doc(userId);
+      // Consulta todos os documentos na coleção "code_created"
+      final querySnapshot = await _firestore.collection('created_codes').get();
 
-      await _firestore.collection('created_codes').add({
-        'code': code,
-        'user': userRef,
-      });
-
-      print('Código adicionado com sucesso.');
+      for (final doc in querySnapshot.docs) {
+        final String code = doc['code'] ?? '';
+        if (code == codeToCompare) {
+          return true;
+        }
+      }
+      return false;
     } catch (e) {
-      print('Erro ao adicionar código: $e');
-      rethrow;
-    }
-  }
-
-  /// Recupera todos os códigos criados por um usuário específico.
-  ///
-  /// - [userId]: ID do usuário.
-  /// Retorna uma lista de mapas contendo os códigos.
-  Future<List<Map<String, dynamic>>> getCreatedCodesByUser(String userId) async {
-    try {
-      // Referência ao documento do usuário na coleção `users`.
-      DocumentReference userRef = _firestore.collection('users').doc(userId);
-
-      QuerySnapshot querySnapshot = await _firestore
-          .collection('created_codes')
-          .where('user', isEqualTo: userRef)
-          .get();
-
-      // Mapeia os documentos para uma lista de mapas.
-      return querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
-    } catch (e) {
-      print('Erro ao buscar códigos: $e');
-      rethrow;
+      print('Erro ao verificar o código: $e');
+      return false;
     }
   }
 }

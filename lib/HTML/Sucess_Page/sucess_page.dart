@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SuccessScreen extends StatelessWidget {
+  final bool isSuccess;
+
+  SuccessScreen({required this.isSuccess});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,13 +13,15 @@ class SuccessScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.check_circle,
-              color: Colors.green,
+              isSuccess ? Icons.check_circle : Icons.cancel,
+              color: isSuccess ? Colors.green : Colors.red,
               size: 100,
             ),
             SizedBox(height: 20), // Espaçamento entre o ícone e o texto
             Text(
-              'Parabéns!!! seu código estava perfeito!',
+              isSuccess
+                  ? 'Parabéns!!! seu código estava perfeito!'
+                  : 'Tente novamente, seu código possuía erros.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 24,

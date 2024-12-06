@@ -32,11 +32,12 @@ class _HtmlEditorState extends State<HtmlEditor> {
           IconButton(
             icon: Icon(Icons.play_arrow),
             onPressed: () {
-              // Navegar para a próxima tela
+              // Obtém o conteúdo do editor e navega para a TestingScreen
+              String code = _htmlController.text;
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => TestingScreen(),
+                  builder: (context) => TestingScreen(code: code),
                 ),
               );
             },
@@ -78,4 +79,3 @@ class _HtmlEditorState extends State<HtmlEditor> {
     );
   }
 }
-
