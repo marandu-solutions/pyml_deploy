@@ -80,6 +80,7 @@ flutter:
     - assets/cards/card3.png
     - assets/cards/card4.png
     - assets/code_cards/card1.png
+    - assets/code_cards/card2.png
     - assets/bg.png
     - assets/default_user.png
 
