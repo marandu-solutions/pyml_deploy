@@ -49,7 +49,7 @@ class UserDetailsScreen extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 children: [
-                  // Foto do usuário
+                  // Foto do usuário com ClipOval
                   Center(
                     child: ClipOval(
                       child: photoUrl != null
@@ -57,7 +57,7 @@ class UserDetailsScreen extends StatelessWidget {
                         photoUrl,
                         width: 300.0,
                         height: 300.0,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.cover, // Ajusta a imagem para cobrir o espaço
                         loadingBuilder: (BuildContext context, Widget child,
                             ImageChunkEvent? loadingProgress) {
                           if (loadingProgress == null) {
@@ -77,7 +77,7 @@ class UserDetailsScreen extends StatelessWidget {
                         'assets/default_user.png', // Foto padrão
                         width: 120.0,
                         height: 120.0,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.cover, // Garantir que a imagem cubra o círculo
                       ),
                     ),
                   ),
