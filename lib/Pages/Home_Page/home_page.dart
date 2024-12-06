@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pyml/Tabs_Screens/code_cards.dart';
 import '../../HTML/interpreter/html_interpreter.dart';
 import '../../Tabs_Screens/home_cards.dart';
-import 'components/bottom_nav_bar.dart';
+import 'Components/bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   @override
